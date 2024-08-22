@@ -42,6 +42,17 @@ public class Solution {
             this.nameA += nameA;
             this.nameB = nameB;
         }
+
+
+        private void writeObject(ObjectOutputStream out) throws IOException {
+            out.defaultWriteObject();
+            out.writeObject(nameA);
+
+        }
+        private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+            in.defaultReadObject ();
+            nameA = (String) in.readObject();
+        }
     }
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {

@@ -17,7 +17,7 @@ Requirements:
 4. Класс Human должен поддерживать интерфейс Serializable.*/
 
 public class Solution {
-    public static class Human {
+    public static class Human implements Serializable {
         public String name;
         public List<String> assets = new ArrayList<>();
 

@@ -1,9 +1,6 @@
 package task2011;
 
-import java.io.Externalizable;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectOutput;
+import java.io.*;
 
 /* 
 Externalizable для апартаментов
@@ -21,7 +18,7 @@ Requirements:
 
 public class Solution {
 
-    public static class Apartment {
+    public static class Apartment implements Externalizable {
 
         private String address;
         private int year;
@@ -44,9 +41,45 @@ public class Solution {
         public String toString() {
             return ("Address: " + address + "\n" + "Year: " + year);
         }
+
+        @Override
+        public void writeExternal(ObjectOutput out) throws IOException {
+            out.writeObject(this.address);
+            out.writeInt(this.year);
+            out.close();
+        }
+
+        @Override
+        public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
+            this.address = (String)in.readObject();
+            this.year = in.readInt();
+            in.close();
+        }
     }
 
     public static void main(String[] args) {
+        Apartment apartment = new Apartment("123 Main St", 2020);
 
+        // Имя файла для сериализации
+        String filename = "2011.txt";
+
+        // Сериализация объекта в файл
+        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(filename))) {
+            apartment.writeExternal(out);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Десериализация объекта из файла
+        Apartment deserializedApartment = new Apartment();
+        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(filename))) {
+            deserializedApartment.readExternal(in);
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        // Вывод десериализованного объекта в консоль
+        System.out.println("Deserialized Apartment:");
+        System.out.println(deserializedApartment);
     }
 }

@@ -1,7 +1,6 @@
 package task2017;
 
-import java.io.ObjectInputStream;
-import java.io.Serializable;
+import java.io.*;
 
 /* 
 Десериализация
@@ -20,10 +19,25 @@ Requirements:
 
 public class Solution {
     public A getOriginalObject(ObjectInputStream objectStream) {
+        try {
+            // Пытаемся десериализовать объект из потока
+            Object obj = objectStream.readObject();
+
+            // Проверяем, является ли объект экземпляром класса A
+            if (obj instanceof A) {
+                return (A) obj;
+            }
+        } catch (Exception e) {
+            // В случае любого исключения выводим сообщение и возвращаем null
+            System.out.println("An exception occurred: " + e);
+        }
+
+        // Если объект не был экземпляром A или произошло исключение
         return null;
     }
 
-    public class A {
+    public class A implements Serializable {
+        // Класс A реализует Serializable, поэтому можно его десериализовать
     }
 
     public class B extends A {

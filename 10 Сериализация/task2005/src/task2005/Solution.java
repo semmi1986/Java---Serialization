@@ -24,7 +24,8 @@ public class Solution {
     public static void main(String[] args) {
         //исправь outputStream/inputStream в соответствии с путем к твоему реальному файлу
         try {
-            File your_file_name = File.createTempFile("your_file_name", null);
+//            File your_file_name = File.createTempFile("your_file_name", null);
+            File your_file_name = new File("2005.txt");
             OutputStream outputStream = new FileOutputStream(your_file_name);
             InputStream inputStream = new FileInputStream(your_file_name);
 
@@ -58,8 +59,11 @@ public class Solution {
 
             Human human = (Human) o;
 
-            if (name == null ? !name.equals(human.name) : human.name != null) return false;
-            return assets != null ? assets.equals(human.assets) : human.assets == null;
+//            if (name == null ? !name.equals(human.name) : human.name != null) return false;
+//            return assets != null ? assets.equals(human.assets) : human.assets == null;
+            if (name == null || !name.equals(human.name)) return false;
+            if (assets == null || !assets.equals(human.assets)) return false;
+            return true;
 
         }
 
@@ -67,7 +71,7 @@ public class Solution {
         public int hashCode() {
             int result = name != null ? name.hashCode() : 0;
             result = 31 * result + (assets != null ? assets.hashCode() : 0);
-            return (int) (Math.random() * 100);
+            return result;
         }
 
         public Human() {

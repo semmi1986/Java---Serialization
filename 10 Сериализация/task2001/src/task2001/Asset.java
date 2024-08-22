@@ -1,9 +1,8 @@
 package task2001;
 
 public class Asset {
-    public Asset(String name, double price) {
+    public Asset(String name) {
         this.name = name;
-        this.price = price;
     }
 
     private String name;
